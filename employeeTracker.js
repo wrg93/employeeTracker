@@ -95,6 +95,38 @@ function viewAllEmployeesByManager(){
 }
 
 function addEmployee(){
+    connection.query(
+        "SELECT * FROM employee RIGHT JOIN role ON employee.role_id = role.role_id", 
+        function(err, result){
+            if (err) throw err;
+            inquirer.prompt([
+                {
+                    type: "input",
+                    message: "What is the employee's first name?",
+                    name: "first"
+                },
+                {
+                    type: "input",
+                    message: "What is the employee's last name?",
+                    name: "last"
+                },
+                {
+                    type: "input",
+                    message: "What is the employee's role?",
+                    name: "role",
+                    choices: function() {
+                        let roles = [];
+                        result.forEach(role => {
+                            roles.push(role.title);
+                        })
+                        let independents = new Set(roles);
+                        roles = [...independents];
+                        return roles;
+                    }
+                }
+
+            ])
+        })
 }
 
 function removeEmployee(){
