@@ -20,9 +20,40 @@ var connection = mysql.createConnection({
 
 // Initiate MySQL Connection.
 connection.connect(function(err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
-  console.log("connected as id " + connection.threadId);
+  if (err) throw err;
+  firstPrompt();
 });
+
+function firstPrompt(){
+    inquirer
+        .prompt({
+            name: "action",
+            type: "rawlist",
+            message: "What would you like to do?",
+            choices: [
+                "Add department",
+                "Add role",
+                "Add employee",
+                "Update employee"
+            ]
+        })
+        .then(function(answer) {
+            switch (answer.action){
+            case "Add deparment":
+                addDepartment();
+                break;
+
+            case "Add role":
+                addRole();
+                break;
+
+            case "Add employee":
+                addEmployee();
+                break;
+
+            case "Update employee":
+                updateEmployee();
+                break;
+            }
+        });
+}
