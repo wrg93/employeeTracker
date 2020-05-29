@@ -130,11 +130,9 @@ function addEmployee(){
                     name: "manager",
                     choices: function() {
                         let employees = [];
-                        res.forEach(employee => {
-                            (employee.first_name !== null){
+                        result.forEach(employee => {
                                 let name = employee.first_name + " " + employee.last_name;
                                 employees.push(name);
-                            }
                         });
                     }
                 }
@@ -156,6 +154,30 @@ function addEmployee(){
 }
 
 function removeEmployee(){
+    connection.query(
+        "SELECT * FROM employee", 
+        function(err, result){
+            if (err) throw err;
+            inquirer.prompt([
+                {
+                    type:"list",
+                    message: "Which employee do you want to remove?",
+                    name: "name",
+                    choices: function (){
+                        let employees = [];
+                        result.forEach(employee => {
+                            if(employee.first_name !== null){
+                                let name = employee.first_name + " " + employee.last_name;
+                                employees.push(name);
+                            }
+                            });
+                            employees.push("None");
+                            return employees;
+                    }
+                }
+            ])
+        }
+    )
 }
 
 function updateEmployeeManager(){
