@@ -1,6 +1,7 @@
 // Dependencies
 var express = require("express");
 var mysql = require("mysql");
+var inquirer = require("inquirer");
 
 // Create express app instance.
 var app = express();
@@ -31,29 +32,82 @@ function firstPrompt(){
             type: "rawlist",
             message: "What would you like to do?",
             choices: [
-                "Add department",
-                "Add role",
+                "View all employees",
+                "View all employees by department",
+                "View all employees by manager",
                 "Add employee",
-                "Update employee"
+                "Remove employee",
+                "Update employee role",
+                "Update employee manager",
+                "View all roles",
+                "Add role",
+                "Remove role"
             ]
         })
         .then(function(answer) {
             switch (answer.action){
-            case "Add deparment":
-                addDepartment();
+            case "View all employees":
+                viewAllEmployees();
                 break;
 
-            case "Add role":
-                addRole();
+            case "View all employees by department":
+                viewAllEmployeesByDepartment();
+                break;
+
+            case "View all employees by manager":
+                viewAllEmployeesByManager();
                 break;
 
             case "Add employee":
                 addEmployee();
                 break;
 
-            case "Update employee":
-                updateEmployee();
+            case "Remove employee":
+                removeEmployee();
+                break;
+
+            case "Update employee manager":
+                updateEmployeeManager();
+                break;
+
+            case "View all roles":
+                viewAllRoles();
+                break;
+            
+            case "Add role":
+                addRole();
+                break;
+
+            case "Remove role":
+                removeRole();
                 break;
             }
         });
+}
+
+function viewAllEmployees(){    
+}
+
+function viewAllEmployeesByDepartment(){
+}
+
+function viewAllEmployeesByManager(){
+}
+
+function addEmployee(){
+}
+
+function removeEmployee(){
+}
+
+function updateEmployeeManager(){
+}
+
+function viewAllRoles(){
+}
+
+function addRole(){
+}
+
+function removeRole(){
 }
