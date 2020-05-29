@@ -103,12 +103,12 @@ function addEmployee(){
                 {
                     type: "input",
                     message: "What is the employee's first name?",
-                    name: "first"
+                    name: "first_name"
                 },
                 {
                     type: "input",
                     message: "What is the employee's last name?",
-                    name: "last"
+                    name: "last_name"
                 },
                 {
                     type: "input",
@@ -123,10 +123,36 @@ function addEmployee(){
                         roles = [...independents];
                         return roles;
                     }
+                },
+                {
+                    type: "list",
+                    message: "Who is the employee's manager?",
+                    name: "manager",
+                    choices: function() {
+                        let employees = [];
+                        res.forEach(employee => {
+                            (employee.first_name !== null){
+                                let name = employee.first_name + " " + employee.last_name;
+                                employees.push(name);
+                            }
+                        });
+                    }
                 }
 
-            ])
+            ]).then(function(answer){
+                connection.query(
+                    "INSERT INTO employee SET ?",
+                    {
+                        first_name : answer.first_name,
+                        last_name: answer.last_name,
+                        role_id: answer.role,
+                        manager_id: answer.manager,
+                    },
+                )
+            })
+
         })
+        firstPrompt();
 }
 
 function removeEmployee(){
