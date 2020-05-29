@@ -36,12 +36,9 @@ function firstPrompt(){
                 "View all employees by department",
                 "View all employees by manager",
                 "Add employee",
-                "Remove employee",
                 "Update employee role",
-                "Update employee manager",
                 "View all roles",
                 "Add role",
-                "Remove role"
             ]
         })
         .then(function(answer) {
@@ -62,14 +59,6 @@ function firstPrompt(){
                 addEmployee();
                 break;
 
-            case "Remove employee":
-                removeEmployee();
-                break;
-
-            case "Update employee manager":
-                updateEmployeeManager();
-                break;
-
             case "View all roles":
                 viewAllRoles();
                 break;
@@ -78,9 +67,6 @@ function firstPrompt(){
                 addRole();
                 break;
 
-            case "Remove role":
-                removeRole();
-                break;
             }
         });
 }
@@ -153,41 +139,9 @@ function addEmployee(){
         firstPrompt();
 }
 
-function removeEmployee(){
-    connection.query(
-        "SELECT * FROM employee", 
-        function(err, result){
-            if (err) throw err;
-            inquirer.prompt([
-                {
-                    type:"list",
-                    message: "Which employee do you want to remove?",
-                    name: "name",
-                    choices: function (){
-                        let employees = [];
-                        result.forEach(employee => {
-                            if(employee.first_name !== null){
-                                let name = employee.first_name + " " + employee.last_name;
-                                employees.push(name);
-                            }
-                            });
-                            employees.push("None");
-                            return employees;
-                    }
-                }
-            ])
-        }
-    )
-}
-
-function updateEmployeeManager(){
-}
 
 function viewAllRoles(){
 }
 
 function addRole(){
-}
-
-function removeRole(){
 }
